@@ -2,62 +2,799 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rangopass — peça seu rango</title>
-<meta name="description" content="Peça comida nos restaurantes parceiros da sua cidade, pague pelo app e retire sem fila.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RangoPass — Peça seu rango e retire sem fila</title>
+<meta name="description" content="Escolha o prato nos restaurantes parceiros de São José do Rio Preto, pague por Pix ou cartão no app e retire no balcão, sem fila.">
+<link rel="canonical" href="https://rangopass.com/">
+<meta name="theme-color" content="#FDF1E8">
+<meta name="apple-itunes-app" content="app-id=6677049048">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rangopass.com/">
+<meta property="og:title" content="RangoPass — Peça seu rango e retire sem fila">
+<meta property="og:description" content="Escolha o prato, pague por Pix ou cartão no app e retire no balcão quando ficar pronto.">
+<meta property="og:image" content="https://rangopass.com/icon.png">
+<meta name="twitter:card" content="summary">
 <link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://xqybcwawlbbtdmionvga.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--cream:#FDF1E8;--ink:#0A0A0A;--soft:#5E554D;--green:#21C16B;--yellow:#F5C842;--white:#fff}
+:root{
+  --cream:#FDF1E8;--cream2:#F3E3D6;--ink:#0A0A0A;--soft:#5E554D;--white:#fff;
+  --green:#21C16B;--green2:#0E8F4C;--orange:#EB7A47;--purple:#C08BF0;--yellow:#F6CB22;
+  --coral:#F26C78;--blue:#6C9DF2;--brown:#7B2D0F;
+  --display:"Anton",Impact,"Arial Narrow",sans-serif;
+  --body:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --shadow:4px 4px 0 var(--ink);
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;font-size:17px}
-.wrap{max-width:760px;margin:0 auto;padding:28px 20px 64px}
-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
-header img{height:30px;width:auto;display:block}
-nav a{color:var(--ink);font-weight:700;font-size:15px;text-decoration:none;margin-left:16px;border-bottom:2px solid var(--green)}
-h1{font-size:clamp(34px,7vw,52px);line-height:1.1;margin:8px 0 12px;font-weight:900;letter-spacing:-.5px}
-h2{font-size:22px;margin:34px 0 8px;font-weight:800}
-p,li{color:#1c1814}
-ul{padding-left:22px}
-a{color:var(--ink)}
-.card{background:var(--white);border:2px solid var(--ink);border-radius:22px;padding:22px;margin:22px 0}
-.hero{background:var(--green);border:2px solid var(--ink);border-radius:28px;padding:30px 24px;margin:8px 0 22px}
-.hero p{font-size:19px;max-width:560px}
-.btn{display:inline-block;background:var(--ink);color:var(--cream);font-weight:800;text-decoration:none;border-radius:999px;padding:14px 26px;margin-top:8px}
-.muted{color:var(--soft);font-size:14px}
-footer{margin-top:44px;padding-top:18px;border-top:2px solid rgba(10,10,10,.12);color:var(--soft);font-size:14px}
-footer a{margin-right:14px}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+.display{font-family:var(--display);font-weight:400;letter-spacing:.2px;line-height:.98;margin:0}
+.kicker{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:2px solid var(--ink);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px;box-shadow:3px 3px 0 var(--ink)}
+.muted{color:var(--soft)}
+
+/* Botões em pílula com sombra chapada (mesmo jeito do app) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:2.5px solid var(--ink);border-radius:999px;padding:14px 24px;font-weight:800;font-size:16px;text-decoration:none;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s ease,box-shadow .15s ease;white-space:nowrap}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+.btn-ink{background:var(--ink);color:var(--cream)}
+.btn-light{background:var(--white);color:var(--ink)}
+.btn-yellow{background:var(--yellow);color:var(--ink)}
+.btn svg{flex:none}
+.store small{display:block;font-size:11px;font-weight:600;opacity:.75;line-height:1}
+.store span{display:block;line-height:1.1;text-align:left}
+
+/* Cabeçalho */
+header.top{position:sticky;top:0;z-index:50;background:var(--cream);transition:border-color .2s;border-bottom:2px solid transparent}
+header.top.scrolled{border-bottom-color:var(--ink)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.top .logo img{height:28px;width:auto}
+.top nav{display:flex;gap:26px;font-weight:700;font-size:15px}
+.top nav a{text-decoration:none;position:relative}
+.top nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:3px;border-radius:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .2s}
+.top nav a:hover::after{transform:scaleX(1)}
+.top .btn{padding:10px 18px;font-size:14px;box-shadow:3px 3px 0 var(--ink)}
+
+/* Hero */
+.hero{position:relative;padding:48px 0 72px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(58px,9.2vw,124px);margin:22px 0 .5em}
+.hero h1 .l{display:block}
+.rot{display:inline-block;position:relative;height:1.2em;line-height:1.2em;overflow:hidden;padding:0 .2em;border:3px solid var(--ink);border-radius:.22em;background:var(--green);box-shadow:5px 5px 0 var(--ink);transform:rotate(-2deg);transition:background-color .35s;margin:.08em 0 .1em}
+.rot b{display:block;font-weight:400}
+.rot b.out{animation:rotOut .28s ease-in forwards}
+.rot b.in{animation:rotIn .38s cubic-bezier(.2,1.4,.4,1) forwards}
+@keyframes rotOut{to{transform:translateY(-60%) rotate(-6deg);opacity:0}}
+@keyframes rotIn{from{transform:translateY(60%) rotate(6deg);opacity:0}to{transform:none;opacity:1}}
+.squiggle{position:relative;white-space:nowrap}
+.squiggle svg{position:absolute;left:0;right:0;bottom:-.16em;width:100%;height:.24em;overflow:visible}
+.squiggle path{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.2s .9s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero p.lead{font-size:clamp(17px,1.7vw,20px);max-width:520px;margin:0 0 28px;color:#2a241f}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.proof{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:28px;font-weight:600;font-size:14px}
+.proof span{display:inline-flex;align-items:center;gap:7px}
+.proof i{width:22px;height:22px;border-radius:50%;border:2px solid var(--ink);display:inline-grid;place-items:center;font-style:normal;font-size:12px;background:var(--yellow)}
+
+/* Celular com a Home do app rolando sozinha */
+.stage{position:relative;height:640px;display:grid;place-items:center}
+.phone{position:relative;width:300px;height:612px;border:11px solid var(--ink);border-radius:52px;background:var(--cream);overflow:hidden;box-shadow:12px 12px 0 rgba(10,10,10,.9);transform:rotate(3deg);animation:phoneIn 1s .2s cubic-bezier(.2,1.2,.4,1) both}
+@keyframes phoneIn{from{transform:translateY(60px) rotate(10deg);opacity:0}to{transform:rotate(3deg);opacity:1}}
+.phone::before{content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);width:88px;height:24px;border-radius:20px;background:var(--ink);z-index:5}
+.ph-head{position:absolute;top:0;left:0;right:0;z-index:4;background:var(--cream);padding:44px 14px 6px;display:flex;align-items:center;justify-content:space-between}
+.ph-head img{height:15px;width:auto}
+.ph-bell{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;background:var(--white)}
+.ph-banner{position:absolute;top:80px;left:0;right:0;z-index:3;background:var(--coral);padding:8px 16px 22px;font-family:var(--display);font-size:25px;line-height:1.02;min-height:86px}
+.ph-banner svg{position:absolute;left:0;bottom:-1px;width:100%;height:14px}
+.ph-feed{position:absolute;top:172px;bottom:0;left:0;right:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 9px;-webkit-mask-image:linear-gradient(transparent 0,#000 18px,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(transparent 0,#000 18px,#000 calc(100% - 40px),transparent)}
+.ph-col{display:flex;flex-direction:column;gap:8px;animation:feed 38s linear infinite}
+.ph-col.b{animation-duration:46s;margin-top:34px}
+@keyframes feed{to{transform:translateY(-50%)}}
+.ph-card{border-radius:18px;padding:7px 7px 9px;flex:none}
+.ph-card .ph-img{width:100%;aspect-ratio:1/1;border-radius:13px;background:rgba(10,10,10,.85);border:2px solid var(--ink);object-fit:cover}
+.ph-card.tall .ph-img{aspect-ratio:4/5}
+.ph-card h5{font-family:var(--display);font-weight:400;font-size:15px;line-height:1.05;margin:6px 2px 1px}
+.ph-card small{display:block;font-size:9px;opacity:.75;margin:0 2px 5px}
+.ph-price{display:inline-flex;border:1.5px solid var(--ink);border-radius:99px;background:var(--white);font-size:9px;font-weight:800;overflow:hidden}
+.ph-price b{background:var(--ink);color:var(--white);padding:2px 6px}
+.ph-price i{font-style:normal;padding:2px 6px;color:#9a6b00}
+.ph-tabs{position:absolute;z-index:6;left:22px;right:22px;bottom:14px;height:46px;border-radius:99px;background:var(--ink);display:flex;align-items:center;justify-content:space-around;padding:0 10px}
+.ph-tabs span{width:22px;height:22px;border-radius:50%;background:rgba(253,241,232,.18)}
+.ph-tabs span.on{width:34px;height:34px;background:var(--green)}
+
+/* Adesivos flutuando em volta do celular */
+.sticker{position:absolute;z-index:8;border:2.5px solid var(--ink);box-shadow:var(--shadow);font-weight:800}
+.notif{top:84px;left:-6px;background:var(--white);border-radius:20px;padding:10px 14px 10px 10px;display:flex;gap:10px;align-items:center;font-size:13px;line-height:1.25;animation:notif 7s 1.6s ease-in-out infinite both}
+.notif .ic{width:36px;height:36px;border-radius:12px;background:var(--green);border:2px solid var(--ink);display:grid;place-items:center;flex:none}
+.notif small{display:block;font-weight:600;color:var(--soft);font-size:12px}
+@keyframes notif{0%{opacity:0;transform:translateX(-30px) rotate(-4deg)}8%,60%{opacity:1;transform:translateX(0) rotate(-4deg)}70%,100%{opacity:0;transform:translateX(-30px) rotate(-4deg)}}
+.seal{right:-4px;top:30px;width:132px;height:132px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;animation:bob 4s ease-in-out infinite}
+.seal svg.ring{position:absolute;inset:6px;animation:spin 16s linear infinite}
+.seal .crown{font-family:var(--display);font-size:30px;line-height:.9;text-align:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chip-pix{bottom:110px;right:6px;background:var(--blue);border-radius:99px;padding:9px 16px;font-size:15px;animation:bob 3.4s .6s ease-in-out infinite;transform:rotate(6deg)}
+.chip-local{bottom:60px;left:4px;background:var(--orange);border-radius:99px;padding:9px 16px;font-size:15px;animation:bob 3.8s 1.2s ease-in-out infinite}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -10px}}
+.spark{position:absolute;z-index:7;width:30px;height:30px;animation:twinkle 2.4s ease-in-out infinite}
+@keyframes twinkle{0%,100%{transform:scale(.6) rotate(0);opacity:.5}50%{transform:scale(1.1) rotate(45deg);opacity:1}}
+
+/* Faixas correndo */
+.ribbons{position:relative;height:190px;margin:-20px 0 10px;overflow:hidden}
+.ribbon{position:absolute;left:-5%;width:110%;border-block:3px solid var(--ink);overflow:hidden;white-space:nowrap}
+.ribbon .track{display:inline-flex;animation:marquee 26s linear infinite}
+.ribbon span{font-family:var(--display);font-size:34px;padding:10px 0;letter-spacing:.5px}
+.ribbon span::after{content:"✦";margin:0 26px}
+.ribbon.r1{top:62px;background:var(--ink);color:var(--yellow);transform:rotate(-2.6deg);z-index:2}
+.ribbon.r2{top:62px;background:var(--green);color:var(--ink);transform:rotate(2.6deg)}
+.ribbon.r2 .track{animation-direction:reverse;animation-duration:30s}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* Seções */
+section{position:relative}
+.sec{padding:84px 0}
+.sec-head{max-width:760px;margin:0 0 42px}
+.sec-head h2{font-size:clamp(44px,6.4vw,84px);margin:16px 0 12px}
+.sec-head p{font-size:19px;margin:0;color:#2a241f}
+
+/* Como funciona */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.step{position:relative;border:3px solid var(--ink);border-radius:30px;padding:22px 22px 26px;box-shadow:6px 6px 0 var(--ink);transition:transform .2s ease}
+.step:hover{transform:translateY(-6px) rotate(-1deg)}
+.step .art{width:100%;max-width:230px;margin:0 auto 6px;aspect-ratio:1/1}
+.step .art svg{width:100%;height:100%;overflow:visible}
+.step:hover .art svg{animation:wiggle .6s ease}
+@keyframes wiggle{25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
+.step .num{position:absolute;top:-22px;left:22px;width:52px;height:52px;border-radius:50%;background:var(--ink);color:var(--cream);font-family:var(--display);font-size:28px;display:grid;place-items:center;border:3px solid var(--ink)}
+.step h3{font-family:var(--display);font-weight:400;font-size:36px;line-height:1;margin:6px 0 8px}
+.step p{margin:0;font-size:16px;color:#1f1a16}
+
+/* Pratos de verdade, direto do app */
+.dishes{padding:84px 0 70px;background:var(--cream2);border-block:3px solid var(--ink)}
+.partners{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.partner{display:inline-flex;align-items:center;gap:9px;background:var(--white);border:2px solid var(--ink);border-radius:999px;padding:5px 14px 5px 5px;font-weight:700;font-size:14px}
+.partner img{width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);object-fit:cover;background:var(--cream)}
+.lane{overflow:hidden;padding:14px 0 18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.lane .track{display:flex;gap:18px;width:max-content;animation:marquee 70s linear infinite}
+.lane.rev .track{animation-direction:reverse;animation-duration:80s}
+.lane:hover .track{animation-play-state:paused}
+.dish{width:230px;flex:none;border-radius:26px;padding:10px 10px 14px;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);text-decoration:none;transition:transform .2s}
+.dish:hover{transform:translateY(-6px) rotate(-1.5deg)}
+.dish .img{width:100%;aspect-ratio:1/1;border-radius:18px;border:2.5px solid var(--ink);background:#1a1a1a;object-fit:cover}
+.dish h4{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.04;margin:10px 4px 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:50px}
+.dish small{display:block;margin:0 4px 10px;font-weight:600;font-size:13px;opacity:.8}
+.price{display:inline-flex;align-items:stretch;border:2px solid var(--ink);border-radius:999px;background:var(--white);overflow:hidden;font-weight:800;font-size:14px;margin-left:4px}
+.price b{background:var(--ink);color:var(--white);padding:4px 11px}
+.price i{font-style:normal;padding:4px 10px;color:#8a6200}
+.dishes .note{font-size:14px;color:var(--soft);margin-top:6px}
+
+/* RangoPass+ */
+.plus{background:var(--ink);color:var(--cream);padding:96px 0;overflow:hidden}
+.plus .wrap{display:grid;grid-template-columns:1fr .9fr;gap:48px;align-items:center}
+.plus h2{font-size:clamp(56px,8vw,110px);color:var(--yellow)}
+.plus h2 span{color:var(--cream)}
+.plus .lead{font-size:20px;margin:18px 0 26px;max-width:520px;color:#efe3d8}
+.perks{list-style:none;padding:0;margin:0 0 30px;display:grid;gap:12px}
+.perks li{display:flex;gap:12px;align-items:flex-start;font-size:17px;font-weight:500}
+.perks li::before{content:"";flex:none;width:26px;height:26px;margin-top:1px;border-radius:50%;background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%230A0A0A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;border:2px solid var(--cream)}
+.receipt{position:relative;background:var(--cream);color:var(--ink);border:3px solid var(--ink);border-radius:26px;padding:22px 22px 18px;box-shadow:8px 8px 0 var(--yellow);transform:rotate(2deg);max-width:420px;margin:0 auto}
+.receipt .art{width:190px;height:190px;margin:-110px auto 0;animation:bob 4s ease-in-out infinite}
+.receipt .art svg{width:100%;height:100%;overflow:visible}
+.receipt h4{font-family:var(--display);font-weight:400;font-size:28px;margin:4px 0 12px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8px 0;border-bottom:2px dashed rgba(10,10,10,.18);font-weight:600}
+.row:last-of-type{border-bottom:0}
+.row s{color:var(--soft);font-weight:500;position:relative;text-decoration:none}
+.row s::after{content:"";position:absolute;left:-2px;right:-2px;top:52%;height:3px;border-radius:3px;background:var(--coral);transform:scaleX(0);transform-origin:left;transition:transform .6s .5s ease}
+.in .row s::after{transform:scaleX(1)}
+.row .g{color:var(--green2);font-weight:800}
+.price-tag{display:flex;align-items:baseline;gap:6px;margin-top:14px;background:var(--yellow);border:2.5px solid var(--ink);border-radius:18px;padding:10px 16px}
+.price-tag b{font-family:var(--display);font-weight:400;font-size:44px;line-height:1}
+.price-tag span{font-weight:700}
+
+/* RFF */
+.rff{padding:96px 0}
+.rff .card{position:relative;background:var(--purple);border:3px solid var(--ink);border-radius:40px;box-shadow:10px 10px 0 var(--ink);padding:56px 48px;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;overflow:hidden}
+.rff h2{font-size:clamp(50px,6.8vw,92px);margin:16px 0 14px}
+.rff p{font-size:19px;margin:0 0 18px;max-width:520px}
+.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 10px;font-weight:700;font-size:15px}
+.flow span{background:var(--white);border:2px solid var(--ink);border-radius:999px;padding:7px 14px}
+.flow em{font-style:normal;font-weight:800}
+.rff .arts{position:relative;height:380px}
+.rff .arts .a1{position:absolute;width:300px;height:300px;left:0;top:0;animation:bob 4.4s ease-in-out infinite}
+.rff .arts .a2{position:absolute;width:250px;height:250px;right:0;bottom:0;animation:bob 3.9s .8s ease-in-out infinite}
+.rff .arts svg{width:100%;height:100%;overflow:visible}
+.age{display:inline-block;font-size:13px;font-weight:700;background:var(--ink);color:var(--cream);border-radius:999px;padding:4px 12px}
+
+/* Restaurantes */
+.biz{padding:20px 0 96px}
+.biz .card{background:var(--green);border:3px solid var(--ink);border-radius:40px;box-shadow:10px 10px 0 var(--ink);padding:56px 48px;display:grid;grid-template-columns:.85fr 1.15fr;gap:36px;align-items:center}
+.biz .art{max-width:340px;margin:0 auto;aspect-ratio:1/1;width:100%}
+.biz .art svg{width:100%;height:100%;overflow:visible}
+.biz h2{font-size:clamp(46px,6vw,80px);margin:16px 0 14px}
+.biz ul{list-style:none;padding:0;margin:0 0 28px;display:grid;gap:12px}
+.biz li{display:flex;gap:12px;font-size:17px;font-weight:500;align-items:flex-start}
+.biz li b{flex:none;width:30px;height:30px;border-radius:10px;background:var(--white);border:2px solid var(--ink);display:grid;place-items:center;font-size:15px}
+
+/* FAQ */
+.faq{padding:30px 0 90px}
+.faq .grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
+.faq h2{font-size:clamp(46px,6vw,80px)}
+details{background:var(--white);border:2.5px solid var(--ink);border-radius:22px;margin-bottom:14px;box-shadow:4px 4px 0 var(--ink);overflow:hidden}
+summary{list-style:none;cursor:pointer;padding:18px 58px 18px 22px;font-weight:700;font-size:17px;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:16px;top:50%;translate:0 -50%;width:30px;height:30px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center;font-size:20px;line-height:1;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg);background:var(--green)}
+details p{margin:0;padding:0 22px 20px;color:#2a241f}
+
+/* Chamada final */
+.final{padding:0 0 90px}
+.final .card{position:relative;background:var(--yellow);border:3px solid var(--ink);border-radius:44px;box-shadow:10px 10px 0 var(--ink);padding:70px 30px;text-align:center;overflow:hidden}
+.final h2{position:relative;z-index:2;font-size:clamp(64px,11vw,160px)}
+.final p,.final .cta-row{position:relative;z-index:2}
+.final p{font-size:20px;margin:14px auto 30px;max-width:560px}
+.final .float{position:absolute;width:110px;height:110px;border-radius:24px;border:3px solid var(--ink);background:#222 center/cover no-repeat;box-shadow:5px 5px 0 var(--ink)}
+.final .f1{left:3%;top:9%;transform:rotate(-10deg);animation:bob 4s ease-in-out infinite}
+.final .f2{right:3%;top:7%;transform:rotate(9deg);animation:bob 3.6s .5s ease-in-out infinite}
+.final .f3{left:9%;bottom:10%;transform:rotate(7deg);width:90px;height:90px;animation:bob 4.4s 1s ease-in-out infinite}
+.final .f4{right:8%;bottom:12%;transform:rotate(-7deg);width:96px;height:96px;animation:bob 3.9s .2s ease-in-out infinite}
+.final .cta-row{justify-content:center}
+
+/* Rodapé */
+footer{background:var(--ink);color:var(--cream);padding:56px 0 40px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:28px;align-items:flex-start}
+footer .flogo{display:inline-block;background:var(--cream);border-radius:16px;padding:10px 14px;margin-bottom:14px;box-shadow:4px 4px 0 var(--green)}
+footer .flogo img{height:26px;width:auto}
+footer nav{display:flex;flex-wrap:wrap;gap:12px 26px;font-weight:600}
+footer nav a{text-decoration:none;opacity:.9}
+footer nav a:hover{opacity:1;text-decoration:underline}
+footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:20px;font-size:14px;opacity:.7}
+
+/* Aparece ao rolar */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+/* Celular / telas menores */
+@media (max-width:960px){
+  .top nav{display:none}
+  .hero{padding:26px 0 40px}
+  .hero .wrap,.plus .wrap,.rff .card,.biz .card,.faq .grid{grid-template-columns:1fr}
+  .stage{height:600px;margin-top:10px}
+  .steps{grid-template-columns:1fr;gap:38px;max-width:520px}
+  .rff .card,.biz .card{padding:38px 22px}
+  .rff .arts{height:300px;max-width:420px}
+  .rff .arts .a1{width:240px;height:240px}
+  .rff .arts .a2{width:200px;height:200px}
+  .biz .art{max-width:240px}
+  .receipt{margin-top:90px}
+  .final .float{display:none}
+  .rff h2,.biz h2{font-size:clamp(38px,11vw,56px)}
+}
+@media (max-width:420px){
+  .wrap{padding:0 16px}
+  .phone{transform:scale(.9) rotate(3deg)}
+  .seal{width:108px;height:108px;right:-8px}
+  .notif{left:-10px}
+  .cta-row .btn{flex:1 1 100%;white-space:normal;text-align:center}
+  .dish{width:200px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .squiggle path{stroke-dashoffset:0}
+  .notif{opacity:1}
+}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MobileApplication","name":"RangoPass","operatingSystem":"iOS","applicationCategory":"FoodApplication","url":"https://rangopass.com/","downloadUrl":"https://apps.apple.com/br/app/rangopass/id6677049048","offers":{"@type":"Offer","price":"0","priceCurrency":"BRL"}}
+</script>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <a href="./"><img src="logo.png" alt="Rangopass"></a>
-  <nav><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos</a></nav>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="RangoPass, início"><img src="logo.png" alt="RangoPass" width="186" height="28"></a>
+    <nav aria-label="Seções">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#pratos">Pratos</a>
+      <a href="#plus">RangoPass+</a>
+      <a href="#rff">RFF</a>
+      <a href="#restaurantes">Restaurantes</a>
+    </nav>
+    <a class="btn btn-ink" href="https://apps.apple.com/br/app/rangopass/id6677049048">Baixar o app</a>
+  </div>
 </header>
 
+<main>
+<!-- HERO -->
 <section class="hero">
-  <h1>Peça seu rango. Sem fila.</h1>
-  <p>O Rangopass reúne restaurantes parceiros da sua cidade: você escolhe o prato, paga pelo app e retira quando estiver pronto.</p>
-  <a class="btn" href="https://apps.apple.com/br/app/rangopass/id6677049048">Baixar na App Store</a>
+  <div class="wrap">
+    <div>
+      <span class="kicker reveal">📍 São José do Rio Preto</span>
+      <h1 class="display reveal d1"><span class="l">Peça seu</span><span class="l"><span class="rot" id="rot"><b>almoço</b></span></span><span class="l"><span class="squiggle">sem fila.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 Q 28 2 53 12 T 103 12 T 153 12 T 203 12 T 253 12 T 297 10" fill="none" stroke="#21C16B" stroke-width="7" stroke-linecap="round"/></svg></span></span></h1>
+      <p class="lead reveal d2">Escolha o prato nos restaurantes parceiros, pague por Pix ou cartão no app e passe no balcão quando estiver pronto. Simples assim.</p>
+      <div class="cta-row reveal d3">
+        <a class="btn btn-ink store" href="https://apps.apple.com/br/app/rangopass/id6677049048">
+          <svg width="22" height="26" viewBox="0 0 384 512" aria-hidden="true"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          <span><small>Baixar na</small>App Store</span>
+        </a>
+        <a class="btn btn-light" href="#como-funciona">Como funciona ↓</a>
+      </div>
+      <div class="proof reveal d3">
+        <span><i>✓</i>Pix ou cartão</span>
+        <span><i>✓</i>Retirada ou comer no local</span>
+        <span><i>✓</i>Acompanhe o preparo</span>
+      </div>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="phone">
+        <div class="ph-head"><img src="logo.png" alt=""><span class="ph-bell"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l2 2H4zM10 21h4" fill="none" stroke="#0A0A0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        <div class="ph-banner"><span id="phGreeting">Bora almoçar?</span><svg viewBox="0 0 300 14" preserveAspectRatio="none"><path d="M0 8 Q 25 0 50 8 T 100 8 T 150 8 T 200 8 T 250 8 T 300 8 V14 H0Z" fill="#FDF1E8"/></svg></div>
+        <div class="ph-feed"><div class="ph-col a" id="colA"></div><div class="ph-col b" id="colB"></div></div>
+        <div class="ph-tabs"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+      </div>
+
+      <div class="sticker notif"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#0A0A0A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Pedido pronto! 🎉<small>Retire no balcão · #482</small></span></div>
+      <div class="sticker seal">
+        <svg class="ring" viewBox="0 0 120 120"><defs><path id="circ" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0"/></defs><text font-family="Poppins,sans-serif" font-weight="800" font-size="11"><textPath href="#circ" textLength="286" lengthAdjust="spacing">RANGOPASS+ · ATÉ 20% OFF · SEM TAXA ·</textPath></text></svg>
+        <div class="crown">👑<br>+</div>
+      </div>
+      <div class="sticker chip-pix">Pix ✓</div>
+      <div class="sticker chip-local">🍴 Comer no local</div>
+      <svg class="spark" style="left:30px;top:20px" viewBox="0 0 24 24"><path d="M12 0 L15 9 L24 12 L15 15 L12 24 L9 15 L0 12 L9 9 Z" fill="#0A0A0A"/></svg>
+      <svg class="spark" style="right:40px;bottom:200px;animation-delay:.8s;width:22px;height:22px" viewBox="0 0 24 24"><path d="M12 0 L15 9 L24 12 L15 15 L12 24 L9 15 L0 12 L9 9 Z" fill="#0A0A0A"/></svg>
+      <svg class="spark" style="left:12px;bottom:20px;animation-delay:1.4s;width:20px;height:20px" viewBox="0 0 24 24"><path d="M12 0 L15 9 L24 12 L15 15 L12 24 L9 15 L0 12 L9 9 Z" fill="#0A0A0A"/></svg>
+    </div>
+  </div>
 </section>
 
-<h2>Como funciona</h2>
-<div class="card">
-  <p><strong>1. Escolha.</strong> Veja os pratos dos restaurantes parceiros, com preços e horários de funcionamento.</p>
-  <p><strong>2. Pague pelo app.</strong> Pix ou cartão, com pagamento seguro processado pelo Asaas.</p>
-  <p><strong>3. Retire.</strong> Acompanhe o preparo em tempo real e retire no restaurante quando ficar pronto.</p>
+<!-- FAIXAS -->
+<div class="ribbons" aria-hidden="true">
+  <div class="ribbon r2"><div class="track" data-repeat="SEM FILA|PIX OU CARTÃO|RETIRE NO BALCÃO|COMA NO LOCAL|MANDE UM RANGO"></div></div>
+  <div class="ribbon r1"><div class="track" data-repeat="BATEU A FOME?|PEDIU, PAGOU, PEGOU|RANGOPASS+|SEM FILA|RIO PRETO"></div></div>
 </div>
 
-<h2>Rango For Friends (RFF)</h2>
-<p>Quer pagar um almoço pra alguém? Mande um rango para um amigo por link ou para pessoas do app. Você só paga se a pessoa aceitar. É um recurso para maiores de 18 anos.</p>
+<!-- COMO FUNCIONA -->
+<section class="sec" id="como-funciona">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker reveal">Como funciona</span>
+      <h2 class="display reveal d1">Três passos e o rango tá na mão.</h2>
+      <p class="reveal d2">Nada de fila no caixa nem de ficar esperando em pé. Você pede de onde estiver.</p>
+    </div>
+    <div class="steps">
+      <article class="step reveal" style="background:var(--green)">
+        <span class="num">1</span>
+        <div class="art" data-art="order-ahead"></div>
+        <h3>Escolha</h3>
+        <p>Veja os pratos dos restaurantes parceiros mais perto de você, com foto, preço e acompanhamentos.</p>
+      </article>
+      <article class="step reveal d1" style="background:var(--yellow)">
+        <span class="num">2</span>
+        <div class="art" data-art="pay"></div>
+        <h3>Pague no app</h3>
+        <p>Pix ou cartão, com pagamento seguro. O pedido chega pago direto no restaurante.</p>
+      </article>
+      <article class="step reveal d2" style="background:var(--coral)">
+        <span class="num">3</span>
+        <div class="art" data-art="pickup"></div>
+        <h3>Retire sem fila</h3>
+        <p>Acompanhe o preparo pelo app e passe no balcão quando estiver pronto. Ou coma por lá.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-<h2>Fale com a gente</h2>
-<p>Dúvidas, sugestões ou quer ter seu restaurante no Rangopass? Chame no WhatsApp: <a href="https://wa.me/5517997910171">+55 17 99791-0171</a>.</p>
+<!-- PRATOS -->
+<section class="dishes" id="pratos">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:18px">
+      <span class="kicker reveal">Cardápio de hoje</span>
+      <h2 class="display reveal d1">Tá com fome de quê?</h2>
+      <p class="reveal d2">Pratos de verdade dos nossos parceiros, direto do app.</p>
+      <div class="partners reveal d3" id="partners"></div>
+    </div>
+  </div>
+  <div class="lane"><div class="track" id="lane1"></div></div>
+  <div class="lane rev"><div class="track" id="lane2"></div></div>
+  <div class="wrap"><p class="note" id="dishNote">Preços e desconto de assinante (👑) como estão no app agora.</p></div>
+</section>
+
+<!-- RANGOPASS+ -->
+<section class="plus" id="plus">
+  <div class="wrap">
+    <div>
+      <span class="kicker reveal" style="background:var(--yellow)">👑 Assinatura</span>
+      <h2 class="display reveal d1">RangoPass<span>+</span></h2>
+      <p class="lead reveal d2">Quem almoça fora toda semana paga menos em todo pedido. A assinatura se paga rapidinho.</p>
+      <ul class="perks reveal d3">
+        <li>Até 20% de desconto nos pratos com a coroa 👑</li>
+        <li>Sem a taxa de conveniência de R$ 0,99 por pedido</li>
+        <li>Promoções só pra assinantes</li>
+        <li>Assine por Pix ou cartão, direto no app</li>
+      </ul>
+      <a class="btn btn-yellow reveal" href="https://apps.apple.com/br/app/rangopass/id6677049048">Assinar pelo app</a>
+    </div>
+    <div class="receipt reveal d2" id="receipt">
+      <div class="art" data-art="plus"></div>
+      <h4>Mesmo prato, conta menor</h4>
+      <div class="row"><span id="rcDish">Linguiça Churrasco</span><span><s id="rcFull">R$ 24,90</s> <span class="g" id="rcSub">R$ 19,92</span></span></div>
+      <div class="row"><span>Taxa de conveniência</span><span><s>R$ 0,99</s> <span class="g">Grátis</span></span></div>
+      <div class="price-tag"><b>R$ 19,90</b><span>/mês</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- RFF -->
+<section class="rff" id="rff">
+  <div class="wrap">
+    <div class="card reveal">
+      <div>
+        <span class="kicker">🎁 Rango For Friends</span>
+        <h2 class="display">Mande um rango pra alguém.</h2>
+        <p>Pague um almoço pra um amigo, por link, ou pra alguém do app. Se a pessoa aceitar, a conversa abre. E você só paga se ela aceitar.</p>
+        <div class="flow"><span>Escolha o prato</span><em>→</em><span>Mande</span><em>→</em><span>Aceitou? Bora conversar 💬</span></div>
+        <span class="age">Para maiores de 18 anos</span>
+      </div>
+      <div class="arts" aria-hidden="true">
+        <div class="a1" data-art="rff-gift"></div>
+        <div class="a2" data-art="rff-chat"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESTAURANTES -->
+<section class="biz" id="restaurantes">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="art" data-art="promos" aria-hidden="true"></div>
+      <div>
+        <span class="kicker">🍽️ Para restaurantes</span>
+        <h2 class="display">Venda mais, sem fila no balcão.</h2>
+        <ul>
+          <li><b>✓</b>O pedido chega pago, direto na impressora do balcão.</li>
+          <li><b>✓</b>Cardápio, fotos, horários e acompanhamentos: você mesmo edita no painel.</li>
+          <li><b>✓</b>Prato do dia e promoções pra trazer cliente novo.</li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn btn-ink" href="https://wa.me/5517997910171?text=Oi!%20Quero%20meu%20restaurante%20no%20RangoPass">Quero ser parceiro</a>
+          <a class="btn btn-light" href="https://painel.rangopass.com/">Já sou parceiro: entrar no painel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap grid">
+    <div>
+      <span class="kicker reveal">Dúvidas</span>
+      <h2 class="display reveal d1" style="margin-top:16px">Perguntas frequentes</h2>
+      <p class="muted reveal d2">Não achou? Chama a gente no <a href="https://wa.me/5517997910171">WhatsApp</a>.</p>
+    </div>
+    <div class="reveal d1">
+      <details><summary>Onde o RangoPass funciona?</summary><p>Em São José do Rio Preto (SP), nos restaurantes parceiros. A lista de parceiros está crescendo.</p></details>
+      <details><summary>Como eu pago?</summary><p>Pelo app, com Pix ou cartão de crédito. O pagamento é processado com segurança pelo Asaas, e o pedido só vai pra cozinha depois de pago.</p></details>
+      <details><summary>Preciso esperar no restaurante?</summary><p>Não. Você acompanha o preparo pelo app e só vai buscar quando estiver pronto. Se preferir, escolha comer no local.</p></details>
+      <details><summary>Tem alguma taxa?</summary><p>Uma taxa de conveniência de R$ 0,99 por pedido, que assinantes do RangoPass+ não pagam. Na retirada, o restaurante pode cobrar a embalagem.</p></details>
+      <details><summary>Como cancelo o RangoPass+?</summary><p>Quando quiser, pelo próprio app.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CHAMADA FINAL -->
+<section class="final">
+  <div class="wrap">
+    <div class="card reveal">
+      <span class="float f1" data-photo="0" aria-hidden="true"></span>
+      <span class="float f2" data-photo="1" aria-hidden="true"></span>
+      <span class="float f3" data-photo="2" aria-hidden="true"></span>
+      <span class="float f4" data-photo="3" aria-hidden="true"></span>
+      <h2 class="display">Bateu a fome?</h2>
+      <p>Baixe o RangoPass e peça o primeiro rango agora.</p>
+      <div class="cta-row">
+        <a class="btn btn-ink store" href="https://apps.apple.com/br/app/rangopass/id6677049048">
+          <svg width="22" height="26" viewBox="0 0 384 512" aria-hidden="true"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          <span><small>Baixar na</small>App Store</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 
 <footer>
-  <a href="./">Início</a><a href="privacidade.html">Política de Privacidade</a><a href="termos.html">Termos de Uso</a>
-  <p>© 2026 Rangopass. Contato: WhatsApp <a href="https://wa.me/5517997910171">+55 17 99791-0171</a></p>
+  <div class="wrap">
+    <div>
+      <span class="flogo"><img src="logo.png" alt="RangoPass" width="172" height="26"></span>
+      <div style="opacity:.75;font-size:15px">Peça, pague e retire sem fila.</div>
+    </div>
+    <nav aria-label="Rodapé">
+      <a href="privacidade.html">Política de Privacidade</a>
+      <a href="termos.html">Termos de Uso</a>
+      <a href="https://wa.me/5517997910171">WhatsApp</a>
+      <a href="https://painel.rangopass.com/">Área do restaurante</a>
+    </nav>
+    <div class="copy">© 2026 RangoPass · São José do Rio Preto, SP · Contato: WhatsApp +55 17 99791-0171</div>
+  </div>
 </footer>
-</div>
+
+<script>
+(function () {
+  "use strict";
+  var C = { green:"#21C16B", purple:"#C08BF0", yellow:"#F6CB22", coral:"#F26C78", blue:"#6C9DF2", orange:"#EB7A47", brown:"#7B2D0F", white:"#FFFFFF" };
+  var INK = "#0A0A0A", W = 5, BUN = "#F7A23B";
+  var CARD_COLORS = [C.green, C.purple, C.yellow, C.coral, C.blue, C.orange];
+  var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Ilustrações (as mesmas do onboarding do app, viewBox 300×300) ---------- */
+  var st = function (w) { return 'stroke="' + INK + '" stroke-width="' + (w || W) + '" stroke-linejoin="round" stroke-linecap="round"'; };
+  var sparkle = function (x, y, r) { r = r || 12; return "M"+x+" "+(y-r)+" L"+(x+r*.25)+" "+(y-r*.25)+" L"+(x+r)+" "+y+" L"+(x+r*.25)+" "+(y+r*.25)+" L"+x+" "+(y+r)+" L"+(x-r*.25)+" "+(y+r*.25)+" L"+(x-r)+" "+y+" L"+(x-r*.25)+" "+(y-r*.25)+" Z"; };
+  var heart = function (x, y, s) { s = s || 1; return "M"+x+" "+(y+14*s)+" C"+(x-22*s)+" "+y+" "+(x-16*s)+" "+(y-18*s)+" "+x+" "+(y-8*s)+" C"+(x+16*s)+" "+(y-18*s)+" "+(x+22*s)+" "+y+" "+x+" "+(y+14*s)+" Z"; };
+  var check = function (x, y, s) { s = s || 1; return "M"+(x-11*s)+" "+y+" L"+(x-3*s)+" "+(y+8*s)+" L"+(x+12*s)+" "+(y-8*s); };
+  var blob = '<circle cx="150" cy="150" r="132" fill="rgba(255,255,255,0.32)"/>';
+  var sparks = function (pts) { return pts.map(function (p, i) { return '<path class="tw" style="animation-delay:' + (i * 0.45) + 's;transform-origin:' + p[0] + 'px ' + p[1] + 'px" d="' + sparkle(p[0], p[1], p[2]) + '" fill="' + INK + '"/>'; }).join(""); };
+  var tick = function (x, y, s, w) { return '<path d="' + check(x, y, s) + '" fill="none" ' + st(w || 5) + '/>'; };
+
+  var ART = {
+    "order-ahead": function () {
+      var rows = [C.coral, C.green, C.yellow].map(function (c, i) {
+        return '<circle cx="184" cy="' + (112 + i * 42) + '" r="11" fill="' + c + '" ' + st(3) + '/>' +
+          '<rect x="201" y="' + (104 + i * 42) + '" width="46" height="6" rx="3" fill="' + INK + '"/>' +
+          '<rect x="201" y="' + (116 + i * 42) + '" width="28" height="5" rx="2.5" fill="' + INK + '" opacity=".3"/>';
+      }).join("");
+      return blob +
+        '<rect x="38" y="146" width="110" height="98" fill="#fff" ' + st() + '/>' +
+        '<path d="M28 150 L93 88 L158 150 Z" fill="' + C.coral + '" ' + st() + '/>' +
+        '<rect x="80" y="194" width="26" height="50" rx="4" fill="' + C.yellow + '" ' + st(4) + '/>' +
+        '<rect x="50" y="164" width="22" height="22" rx="3" fill="' + C.blue + '" ' + st(4) + '/>' +
+        '<g transform="rotate(8 212 160)"><rect x="162" y="66" width="100" height="182" rx="20" fill="#fff" ' + st() + '/>' + rows + '</g>' +
+        '<circle cx="252" cy="70" r="22" fill="' + C.green + '" ' + st(4) + '/>' + tick(252, 70) +
+        sparks([[40, 70, 10], [190, 40, 9]]);
+    },
+    pay: function () {
+      return blob +
+        '<g transform="rotate(-12 150 150)"><rect x="52" y="88" width="184" height="118" rx="16" fill="' + C.blue + '" ' + st() + '/>' +
+        '<rect x="52" y="114" width="184" height="20" fill="' + INK + '"/>' +
+        '<rect x="74" y="150" width="32" height="24" rx="5" fill="' + C.yellow + '" ' + st(3) + '/>' +
+        '<rect x="150" y="176" width="64" height="7" rx="3.5" fill="' + INK + '" opacity=".5"/></g>' +
+        '<g transform="rotate(45 210 192)"><rect x="172" y="154" width="76" height="76" rx="16" fill="' + C.green + '" ' + st() + '/>' +
+        '<rect x="196" y="178" width="28" height="28" rx="6" fill="#fff" ' + st(4) + '/></g>' +
+        '<circle cx="78" cy="226" r="24" fill="' + C.yellow + '" ' + st() + '/><circle cx="78" cy="226" r="12" fill="none" ' + st(3) + '/>' +
+        '<circle cx="112" cy="244" r="16" fill="' + C.yellow + '" ' + st(4) + '/>' +
+        sparks([[250, 64, 12], [52, 70, 9]]);
+    },
+    pickup: function () {
+      var awning = [0, 1, 2, 3, 4].map(function (i) {
+        return '<path d="M' + (40 + i * 44) + ' 62 h44 v30 a22 22 0 0 1 -44 0 Z" fill="' + (i % 2 === 0 ? C.coral : "#fff") + '" ' + st(4) + '/>';
+      }).join("");
+      return blob +
+        '<rect x="48" y="92" width="204" height="150" fill="#fff" ' + st() + '/>' + awning +
+        '<path d="M126 136 V120 Q126 98 150 98 Q174 98 174 120 V136" fill="none" ' + st() + '/>' +
+        '<rect x="98" y="134" width="104" height="108" rx="12" fill="' + C.yellow + '" ' + st() + '/>' +
+        '<circle cx="150" cy="188" r="26" fill="' + C.green + '" ' + st(4) + '/>' + tick(150, 188, 1.15, 6) +
+        '<line x1="24" y1="244" x2="276" y2="244" ' + st() + '/>' +
+        sparks([[262, 40, 10], [36, 40, 9]]);
+    },
+    plus: function () {
+      var coins = [0, 1, 2].map(function (i) { return '<ellipse cx="86" cy="' + (248 - i * 16) + '" rx="34" ry="12" fill="' + C.yellow + '" ' + st(4) + '/>'; }).join("");
+      return blob +
+        '<path d="M74 150 L92 76 L128 120 L150 58 L172 120 L208 76 L226 150 Z" fill="' + C.yellow + '" ' + st() + '/>' +
+        '<rect x="70" y="146" width="160" height="34" rx="8" fill="' + C.yellow + '" ' + st() + '/>' +
+        '<circle cx="110" cy="163" r="7" fill="' + C.coral + '" ' + st(3) + '/><circle cx="150" cy="163" r="7" fill="' + C.green + '" ' + st(3) + '/><circle cx="190" cy="163" r="7" fill="' + C.blue + '" ' + st(3) + '/>' +
+        coins +
+        '<g transform="rotate(6 214 230)"><rect x="170" y="196" width="92" height="70" rx="10" fill="#fff" ' + st() + '/>' +
+        '<rect x="184" y="212" width="54" height="8" rx="4" fill="' + INK + '" opacity=".35"/>' +
+        '<line x1="180" y1="216" x2="244" y2="216" stroke="' + C.coral + '" stroke-width="5" stroke-linecap="round"/>' +
+        '<rect x="184" y="234" width="40" height="10" rx="5" fill="' + C.green + '" ' + st(2.5) + '/></g>' +
+        sparks([[44, 70, 12], [258, 62, 12], [150, 30, 8]]);
+    },
+    "rff-gift": function () {
+      return blob +
+        '<rect x="78" y="132" width="144" height="112" rx="8" fill="' + C.coral + '" ' + st() + '/>' +
+        '<rect x="66" y="104" width="168" height="34" rx="8" fill="' + C.coral + '" ' + st() + '/>' +
+        '<rect x="137" y="104" width="26" height="140" fill="' + C.yellow + '" ' + st(4) + '/>' +
+        '<ellipse cx="124" cy="92" rx="26" ry="15" fill="' + C.yellow + '" ' + st(4) + ' transform="rotate(-22 124 92)"/>' +
+        '<ellipse cx="176" cy="92" rx="26" ry="15" fill="' + C.yellow + '" ' + st(4) + ' transform="rotate(22 176 92)"/>' +
+        '<circle cx="150" cy="100" r="11" fill="' + C.yellow + '" ' + st(4) + '/>' +
+        '<line x1="104" y1="168" x2="104" y2="214" ' + st() + '/>' +
+        '<path d="M96 164 V178 Q104 186 112 178 V164" fill="none" ' + st(4) + '/>' +
+        '<path d="M196 164 Q186 180 196 192 V214" fill="none" ' + st() + '/>' +
+        sparks([[48, 80, 12], [252, 70, 10], [256, 214, 9]]);
+    },
+    "rff-chat": function () {
+      return blob +
+        '<rect x="34" y="58" width="160" height="84" rx="26" fill="#fff" ' + st() + '/>' +
+        '<path d="M64 138 L56 166 L92 140" fill="#fff" ' + st() + '/>' +
+        '<rect x="60" y="82" width="98" height="8" rx="4" fill="' + INK + '"/><rect x="60" y="102" width="64" height="7" rx="3.5" fill="' + INK + '" opacity=".3"/>' +
+        '<rect x="106" y="164" width="160" height="84" rx="26" fill="' + C.green + '" ' + st() + '/>' +
+        '<path d="M236 244 L246 272 L208 246" fill="' + C.green + '" ' + st() + '/>' +
+        '<circle cx="150" cy="206" r="20" fill="#fff" ' + st(4) + '/>' + tick(150, 206, 0.9) +
+        '<rect x="182" y="194" width="62" height="8" rx="4" fill="' + INK + '"/><rect x="182" y="212" width="40" height="7" rx="3.5" fill="' + INK + '" opacity=".4"/>' +
+        '<path d="' + heart(236, 70, 1.1) + '" fill="' + C.coral + '" ' + st(4) + '/>' +
+        sparks([[40, 228, 11], [270, 132, 9]]);
+    },
+    promos: function () {
+      return blob +
+        '<rect x="44" y="118" width="34" height="60" rx="10" fill="#fff" ' + st() + '/>' +
+        '<path d="M76 122 L182 70 L182 226 L76 174 Z" fill="' + C.coral + '" ' + st() + '/>' +
+        '<path d="M96 176 L110 222 Q112 232 122 230 L136 226 Q144 222 140 212 L130 186" fill="#fff" ' + st() + '/>' +
+        '<path d="M204 112 Q226 148 204 184" fill="none" ' + st(6) + '/><path d="M226 90 Q262 148 226 206" fill="none" ' + st(6) + '/>' +
+        '<g transform="rotate(14 222 246)"><rect x="182" y="222" width="84" height="48" rx="12" fill="' + C.yellow + '" ' + st() + '/>' +
+        '<circle cx="196" cy="246" r="5" fill="' + INK + '"/>' +
+        '<circle cx="223.5" cy="237.5" r="5.1" fill="none" ' + st(3.5) + '/><circle cx="240.5" cy="254.5" r="5.1" fill="none" ' + st(3.5) + '/>' +
+        '<line x1="243" y1="233" x2="221" y2="259" ' + st(4) + '/></g>' +
+        '<path d="' + heart(232, 52, 1) + '" fill="' + C.coral + '" ' + st(4) + '/>' +
+        sparks([[46, 70, 11], [60, 236, 9]]);
+    }
+  };
+  document.querySelectorAll("[data-art]").forEach(function (el) {
+    var f = ART[el.getAttribute("data-art")];
+    if (f) el.innerHTML = '<svg viewBox="0 0 300 300" role="img" aria-hidden="true">' + f() + "</svg>";
+  });
+  var twStyle = document.createElement("style");
+  twStyle.textContent = ".tw{animation:twinkle 2.4s ease-in-out infinite}";
+  document.head.appendChild(twStyle);
+
+  /* ---------- Faixas: repete o texto pra rolagem não ter emenda ---------- */
+  document.querySelectorAll("[data-repeat]").forEach(function (t) {
+    var words = t.getAttribute("data-repeat").split("|");
+    var html = words.map(function (w) { return "<span>" + w + "</span>"; }).join("");
+    t.innerHTML = html + html + html + html;
+  });
+
+  /* ---------- Palavra que troca no título ---------- */
+  var rot = document.getElementById("rot");
+  var words = [["almoço", C.green], ["jantar", C.yellow], ["lanche", C.coral], ["rango", C.purple]];
+  var wi = 0;
+  if (rot && !reduced) {
+    setInterval(function () {
+      var b = rot.querySelector("b");
+      b.className = "out";
+      setTimeout(function () {
+        wi = (wi + 1) % words.length;
+        b.textContent = words[wi][0];
+        rot.style.backgroundColor = words[wi][1];
+        b.className = "in";
+      }, 260);
+    }, 2400);
+  }
+
+  /* Saudação do celular conforme a hora (igual ao app) */
+  var h = new Date().getHours() + new Date().getMinutes() / 60;
+  var greet = document.getElementById("phGreeting");
+  if (greet) greet.textContent = h >= 10 && h < 14.5 ? "Bora almoçar?" : h >= 14.5 && h < 17 ? "Bateu a fome?" : h >= 17 && h < 23 ? "Janta sem fila?" : "Já pensando no rango?";
+
+  /* ---------- Cabeçalho ganha borda ao rolar ---------- */
+  var top = document.getElementById("top");
+  var onScroll = function () { top.classList.toggle("scrolled", window.scrollY > 8); };
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  /* ---------- Aparecer ao rolar ---------- */
+  var io = "IntersectionObserver" in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.14, rootMargin: "0px 0px -40px 0px" }) : null;
+  document.querySelectorAll(".reveal").forEach(function (el) { io ? io.observe(el) : el.classList.add("in"); });
+
+  /* ---------- Pratos de verdade (cardápio público do app) ---------- */
+  var SB = "https://xqybcwawlbbtdmionvga.supabase.co/rest/v1/";
+  // Chave pública (anon) do app: só lê o que já é público, como o cardápio.
+  var KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhxeWJjd2F3bGJidGRtaW9udmdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI3NDc0MzYsImV4cCI6MjEwODMyMzQzNn0.ErJKe6mimrTx3h716GmmEk-YTRgY1AMTvyqtAg3sQIs";
+  var STORE = "https://xqybcwawlbbtdmionvga.supabase.co/storage/v1/object/public/restaurant-images/";
+  // Se o servidor não responder: alguns pratos fixos (sem preço, pra não mostrar valor velho).
+  var FALLBACK = [
+    ["Linguiça Churrasco", "patroni", "patroni/products/1773694853832.jpg"],
+    ["Saint Peter Grelhado", "mamma", "mamma/products/1772486791520.jpg"],
+    ["Parmegiana Cream Cheese Frango", "patroni", "patroni/products/1773689910316.jpg"],
+    ["Picanha", "mamma", "mamma/products/1772483390569.jpg"],
+    ["Nhoque com Polpetone", "patroni", "patroni/products/1773687478232.jpg"],
+    ["Filé de Frango Crocante", "mamma", "mamma/products/1772483753529.jpg"],
+    ["Strogonoff Frango", "patroni", "patroni/products/1772568626340.jpg"],
+    ["Tirinhas Frango", "patroni", "patroni/products/1773694531366.jpg"]
+  ].map(function (d) { return { name: d[0], restaurant_id: d[1], image_url: STORE + d[2], price_centavos: null, home_discount_percent: 0 }; });
+  var REST_NAMES = { patroni: "Patroni", mamma: "Mamma Grill", panzerotto: "Panzerotto" };
+
+  var thumb = function (url) {
+    var m = /^(https?:\/\/.+\/storage\/v1\/object\/public\/restaurant-images\/.+\/products)\/([^/?#]+)\.[a-z0-9]+$/i.exec(url || "");
+    return m ? m[1] + "/thumbs/" + m[2] + ".jpg" : url;
+  };
+  var brl = function (c) { return (c / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }); };
+  var subPrice = function (c, pct) { return Math.round(c * (1 - (pct || 0) / 100)); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]; }); };
+  var nice = function (s) { return s && s === s.toLowerCase() ? s.charAt(0).toUpperCase() + s.slice(1) : s; };
+  var shuffle = function (a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+  // Foto: a miniatura (560px); se ela não existir, cai pra original.
+  var img = function (url, cls, alt) {
+    return '<img class="' + cls + '" src="' + esc(thumb(url)) + '" data-full="' + esc(url) + '" alt="' + esc(alt || "") + '" loading="lazy" decoding="async" onerror="if(this.dataset.full&&this.src!==this.dataset.full){this.src=this.dataset.full}">';
+  };
+
+  function priceHtml(d, cls) {
+    if (d.price_centavos == null) return "";
+    var sub = d.home_discount_percent > 0 ? '<i>👑 ' + brl(subPrice(d.price_centavos, d.home_discount_percent)) + "</i>" : "";
+    return '<span class="' + cls + '"><b>' + brl(d.price_centavos) + "</b>" + sub + "</span>";
+  }
+
+  function render(dishes, restaurants) {
+    var names = {};
+    restaurants.forEach(function (r) { names[r.restaurant_id] = nice(r.name) || REST_NAMES[r.restaurant_id] || r.restaurant_id; });
+    var restName = function (id) { return names[id] || REST_NAMES[id] || nice(id); };
+
+    // Celular: duas colunas que rolam sem parar (conteúdo duplicado pra emenda sumir).
+    var phoneCard = function (d, i, tall) {
+      return '<div class="ph-card' + (tall ? " tall" : "") + '" style="background:' + CARD_COLORS[i % CARD_COLORS.length] + '">' +
+        img(d.image_url, "ph-img") + '<h5>' + esc(d.name) + "</h5><small>" + esc(restName(d.restaurant_id)) + "</small>" +
+        priceHtml(d, "ph-price") + "</div>";
+    };
+    var half = Math.ceil(Math.min(dishes.length, 12) / 2);
+    var a = dishes.slice(0, half), b = dishes.slice(half, half * 2);
+    var colHtml = function (list, off) { var s = list.map(function (d, i) { return phoneCard(d, i + off, (i + off) % 3 === 0); }).join(""); return s + s; };
+    document.getElementById("colA").innerHTML = colHtml(a, 0);
+    document.getElementById("colB").innerHTML = colHtml(b.length ? b : a, 3);
+
+    // Duas esteiras de pratos, em sentidos opostos.
+    var dishCard = function (d, i) {
+      return '<a class="dish" href="https://apps.apple.com/br/app/rangopass/id6677049048" style="background:' + CARD_COLORS[i % CARD_COLORS.length] + '">' +
+        img(d.image_url, "img", d.name) +
+        "<h4>" + esc(d.name) + "</h4><small>" + esc(restName(d.restaurant_id)) + "</small>" + priceHtml(d, "price") + "</a>";
+    };
+    var mid = Math.ceil(dishes.length / 2);
+    var l1 = dishes.slice(0, mid), l2 = dishes.slice(mid);
+    var laneHtml = function (list, off) { var s = list.map(function (d, i) { return dishCard(d, i + off); }).join(""); return s + s; };
+    document.getElementById("lane1").innerHTML = laneHtml(l1, 0);
+    document.getElementById("lane2").innerHTML = laneHtml(l2.length ? l2 : l1, 2);
+
+    // Parceiros
+    var partners = document.getElementById("partners");
+    var list = restaurants.length ? restaurants : Object.keys(REST_NAMES).map(function (k) { return { restaurant_id: k, name: REST_NAMES[k] }; });
+    partners.innerHTML = list.map(function (r) {
+      var logo = (r.logo_url || "").split("#")[0];
+      return '<span class="partner">' + (logo ? '<img src="' + esc(logo) + '" alt="" loading="lazy">' : "") + esc(restName(r.restaurant_id)) + "</span>";
+    }).join("");
+
+    // Exemplo do RangoPass+ com um prato real que tem desconto.
+    var ex = dishes.filter(function (d) { return d.price_centavos && d.home_discount_percent > 0; })[0];
+    if (ex) {
+      document.getElementById("rcDish").textContent = ex.name;
+      document.getElementById("rcFull").textContent = brl(ex.price_centavos);
+      document.getElementById("rcSub").textContent = brl(subPrice(ex.price_centavos, ex.home_discount_percent));
+    }
+
+    // Fotos flutuando na chamada final
+    document.querySelectorAll("[data-photo]").forEach(function (el) {
+      var d = dishes[(Number(el.getAttribute("data-photo")) * 3 + 1) % dishes.length];
+      if (d) el.style.backgroundImage = "url('" + thumb(d.image_url) + "')";
+    });
+    if (dishes[0] && dishes[0].price_centavos == null) document.getElementById("dishNote").textContent = "Veja os preços atualizados no app.";
+  }
+
+  var get = function (path) {
+    return fetch(SB + path, { headers: { apikey: KEY, Authorization: "Bearer " + KEY } }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+  };
+  Promise.all([
+    get("restaurant_products?select=id,name,price_centavos,home_discount_percent,image_url,restaurant_id,is_upsell,category&available=eq.true&image_url=not.is.null&order=created_at.desc&limit=120"),
+    get("restaurant_profiles?select=restaurant_id,name,logo_url")
+  ]).then(function (res) {
+    var dishes = res[0].filter(function (d) {
+      return !d.is_upsell && !/bebida/i.test(d.category || "") && !/teste/i.test(d.name) && d.image_url;
+    });
+    var restaurants = res[1].filter(function (r) { return dishes.some(function (d) { return d.restaurant_id === r.restaurant_id; }); });
+    if (dishes.length < 4) throw new Error("poucos pratos");
+    render(shuffle(dishes).slice(0, 28), restaurants);
+  }).catch(function () {
+    render(FALLBACK, []);
+  });
+})();
+</script>
 </body>
 </html>
