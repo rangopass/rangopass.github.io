@@ -60,6 +60,47 @@ header.top.scrolled{border-bottom-color:var(--ink)}
 .top nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:3px;border-radius:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .2s}
 .top nav a:hover::after{transform:scaleX(1)}
 .top .btn{padding:10px 18px;font-size:14px;box-shadow:3px 3px 0 var(--ink)}
+.top-actions{display:flex;align-items:center;gap:10px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:50%;border:2.5px solid var(--ink);background:var(--white);box-shadow:3px 3px 0 var(--ink);cursor:pointer;place-items:center;padding:0}
+.menu-btn svg{display:block}
+.mmenu{position:fixed;z-index:49;top:72px;left:0;right:0;background:var(--cream);border-bottom:3px solid var(--ink);padding:10px 20px 24px;display:grid;gap:4px;box-shadow:0 18px 30px rgba(10,10,10,.12);animation:menuIn .22s ease}
+.mmenu[hidden]{display:none}
+.mmenu a.lnk{font-family:var(--display);font-size:30px;text-decoration:none;padding:6px 0;border-bottom:2px dashed rgba(10,10,10,.15)}
+.mmenu .btn{margin-top:10px}
+@keyframes menuIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+
+/* Formulários (Sou restaurante / Indicar) */
+html:has(dialog[open]){overflow:hidden}
+dialog.modal{border:3px solid var(--ink);border-radius:30px;padding:0;width:min(520px,calc(100vw - 28px));max-height:calc(100dvh - 28px);background:var(--cream);color:var(--ink);box-shadow:10px 10px 0 var(--ink);overflow:auto}
+dialog.modal[open]{animation:dlgIn .32s cubic-bezier(.2,1.3,.4,1)}
+dialog.modal::backdrop{background:rgba(10,10,10,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+@keyframes dlgIn{from{opacity:0;transform:translateY(30px) scale(.96) rotate(-1deg)}to{opacity:1;transform:none}}
+.lead-form{position:relative;padding:30px 26px 24px}
+.lead-form h3{font-family:var(--display);font-weight:400;font-size:clamp(34px,8vw,44px);line-height:1;margin:14px 0 8px}
+.lead-form > div > p{margin:0 0 18px;color:#2a241f}
+.lead-form label{display:block;font-weight:700;font-size:14px;margin:0 0 14px}
+.lead-form label small{font-weight:500;color:var(--soft)}
+.lead-form input,.lead-form select{display:block;width:100%;margin-top:6px;font:500 16px var(--body);color:var(--ink);background:var(--white);border:2.5px solid var(--ink);border-radius:14px;padding:12px 14px;outline:none;transition:box-shadow .15s;-webkit-appearance:none;appearance:none}
+.lead-form select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%230A0A0A' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:18px;padding-right:40px}
+.lead-form input:focus,.lead-form select:focus{box-shadow:4px 4px 0 var(--green)}
+.lead-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.lead-form .err{background:#ffe1e4;border:2px solid var(--coral);border-radius:12px;padding:10px 12px;font-weight:600;font-size:14px;margin:0 0 14px}
+.lead-form .submit{width:100%;margin-top:4px}
+.lead-form .submit[disabled]{opacity:.7;cursor:wait}
+.lead-form .fine{font-size:12.5px;color:var(--soft);margin:12px 0 0;text-align:center}
+.lead-form .x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:2.5px solid var(--ink);background:var(--white);font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:2px 2px 0 var(--ink)}
+.form-done{text-align:center}
+.form-done .art{width:170px;height:170px;margin:0 auto}
+.form-done .art svg{width:100%;height:100%;overflow:visible}
+.form-done p{margin:6px 0 20px}
+
+/* Faixa "indique" */
+.refer{padding:0 0 70px}
+.refer .card{background:var(--blue);border:3px solid var(--ink);border-radius:40px;box-shadow:10px 10px 0 var(--ink);padding:40px 48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.refer .art{width:220px;height:220px}
+.refer .art svg{width:100%;height:100%;overflow:visible}
+.refer h2{font-size:clamp(40px,5.2vw,68px);margin:14px 0 10px}
+.refer p{font-size:18px;margin:0 0 22px;max-width:560px}
 
 /* Hero */
 .hero{position:relative;padding:48px 0 72px;overflow:hidden}
@@ -260,8 +301,13 @@ footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:2
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
 
 /* Celular / telas menores */
+@media (max-width:1100px){
+  .top nav,.top .only-wide{display:none}
+  .menu-btn{display:grid}
+}
 @media (max-width:960px){
-  .top nav{display:none}
+  .refer .card{grid-template-columns:1fr;padding:34px 22px;text-align:left}
+  .refer .art{width:170px;height:170px}
   .hero{padding:26px 0 40px}
   .hero .wrap,.plus .wrap,.rff .card,.biz .card,.faq .grid{grid-template-columns:1fr}
   .stage{height:600px;margin-top:10px}
@@ -276,6 +322,8 @@ footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:2
   .rff h2,.biz h2{font-size:clamp(38px,11vw,56px)}
 }
 @media (max-width:420px){
+  .top .btn-app{padding:9px 14px;font-size:13px}
+  .top .logo img{height:22px}
   .wrap{padding:0 16px}
   .phone{transform:scale(.9) rotate(3deg)}
   .seal{width:108px;height:108px;right:-8px}
@@ -304,11 +352,23 @@ footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:2
       <a href="#pratos">Pratos</a>
       <a href="#plus">RangoPass+</a>
       <a href="#rff">RFF</a>
-      <a href="#restaurantes">Restaurantes</a>
+      <a href="#indicar" data-open="indicacao">Indicar restaurante</a>
     </nav>
-    <a class="btn btn-ink" href="https://apps.apple.com/br/app/rangopass/id6677049048">Baixar o app</a>
+    <div class="top-actions">
+      <a class="btn btn-light only-wide" href="#sou-restaurante" data-open="restaurante">Sou restaurante</a>
+      <a class="btn btn-ink btn-app" href="https://apps.apple.com/br/app/rangopass/id6677049048">Baixar o app</a>
+      <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mmenu"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="#0A0A0A" stroke-width="2.8" stroke-linecap="round"/></svg></button>
+    </div>
   </div>
 </header>
+<nav class="mmenu" id="mmenu" aria-label="Menu" hidden>
+  <a class="lnk" href="#como-funciona">Como funciona</a>
+  <a class="lnk" href="#pratos">Pratos</a>
+  <a class="lnk" href="#plus">RangoPass+</a>
+  <a class="lnk" href="#rff">RFF</a>
+  <a class="btn btn-ink" href="#sou-restaurante" data-open="restaurante">Sou restaurante</a>
+  <a class="btn btn-light" href="#indicar" data-open="indicacao">Indicar restaurante</a>
+</nav>
 
 <main>
 <!-- HERO -->
@@ -464,9 +524,24 @@ footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:2
           <li><b>✓</b>Prato do dia e promoções pra trazer cliente novo.</li>
         </ul>
         <div class="cta-row">
-          <a class="btn btn-ink" href="https://wa.me/5517997910171?text=Oi!%20Quero%20meu%20restaurante%20no%20RangoPass">Quero ser parceiro</a>
+          <a class="btn btn-ink" href="#sou-restaurante" data-open="restaurante">Quero ser parceiro</a>
           <a class="btn btn-light" href="https://painel.rangopass.com/">Já sou parceiro: entrar no painel</a>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDIQUE -->
+<section class="refer" id="indique">
+  <div class="wrap">
+    <div class="card reveal">
+      <div class="art" data-art="rff-place" aria-hidden="true"></div>
+      <div>
+        <span class="kicker">📣 Indique</span>
+        <h2 class="display">Seu restaurante favorito ainda não tá aqui?</h2>
+        <p>Conta pra gente qual é. A gente chama o restaurante pra entrar no RangoPass.</p>
+        <a class="btn btn-ink" href="#indicar" data-open="indicacao">Indicar restaurante</a>
       </div>
     </div>
   </div>
@@ -511,6 +586,55 @@ footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:2
 </section>
 </main>
 
+<dialog class="modal" id="dlg-restaurante" aria-labelledby="t-rest">
+  <form class="lead-form" data-kind="restaurante" novalidate>
+    <button type="button" class="x" data-close aria-label="Fechar">×</button>
+    <div class="form-body">
+      <span class="kicker">🍽️ Sou restaurante</span>
+      <h3 id="t-rest">Leve seu restaurante pro RangoPass</h3>
+      <p>Preencha os dados e a gente entra em contato pelo WhatsApp.</p>
+      <label>Nome do restaurante<input name="restaurant_name" maxlength="120" autocomplete="organization" required></label>
+      <label>Categoria<select name="category" required><option value="">Escolha a categoria</option><option>Restaurante / self-service</option><option>Marmitaria</option><option>Lanches e hambúrguer</option><option>Pizzaria</option><option>Japonesa</option><option>Italiana e massas</option><option>Árabe</option><option>Saudável / fit</option><option>Churrascaria e grelhados</option><option>Bar e petiscos</option><option>Cafeteria e padaria</option><option>Doces e sobremesas</option><option>Açaí e sorvete</option><option>Outra</option></select></label>
+      <label>Nome do responsável<input name="contact_name" maxlength="120" autocomplete="name" required></label>
+      <label>Telefone (WhatsApp)<input name="phone" inputmode="tel" autocomplete="tel" placeholder="(17) 99999-9999" maxlength="16" required></label>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="err" role="alert" hidden></p>
+      <button class="btn btn-ink submit" type="submit">Quero ser parceiro</button>
+      <p class="fine">Ao enviar, você concorda com a nossa <a href="privacidade.html">Política de Privacidade</a>.</p>
+    </div>
+    <div class="form-done" hidden>
+      <div class="art" data-art="pickup" aria-hidden="true"></div>
+      <h3>Recebemos! 🎉</h3>
+      <p>Vamos entrar em contato em breve pelo WhatsApp que você informou.</p>
+      <button type="button" class="btn btn-ink" data-close>Fechar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="modal" id="dlg-indicacao" aria-labelledby="t-ind">
+  <form class="lead-form" data-kind="indicacao" novalidate>
+    <button type="button" class="x" data-close aria-label="Fechar">×</button>
+    <div class="form-body">
+      <span class="kicker">📣 Indicar restaurante</span>
+      <h3 id="t-ind">Onde você queria pedir pelo RangoPass?</h3>
+      <p>Indique o restaurante e a gente chama ele pra entrar no app.</p>
+      <label>Nome do restaurante<input name="restaurant_name" maxlength="120" autocomplete="off" required></label>
+      <label>Telefone do restaurante <small>(se souber)</small><input name="phone" inputmode="tel" autocomplete="off" placeholder="(17) 3333-3333" maxlength="16"></label>
+      <label>Seu nome<input name="contact_name" maxlength="120" autocomplete="name" required></label>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="err" role="alert" hidden></p>
+      <button class="btn btn-ink submit" type="submit">Enviar indicação</button>
+      <p class="fine">Ao enviar, você concorda com a nossa <a href="privacidade.html">Política de Privacidade</a>.</p>
+    </div>
+    <div class="form-done" hidden>
+      <div class="art" data-art="rff-chat" aria-hidden="true"></div>
+      <h3>Valeu pela indicação! 💚</h3>
+      <p>Vamos falar com o restaurante. Quando ele entrar, aparece aqui e no app.</p>
+      <button type="button" class="btn btn-ink" data-close>Fechar</button>
+    </div>
+  </form>
+</dialog>
+
 <footer>
   <div class="wrap">
     <div>
@@ -521,6 +645,8 @@ footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:2
       <a href="privacidade.html">Política de Privacidade</a>
       <a href="termos.html">Termos de Uso</a>
       <a href="https://wa.me/5517997910171">WhatsApp</a>
+      <a href="#sou-restaurante" data-open="restaurante">Sou restaurante</a>
+      <a href="#indicar" data-open="indicacao">Indicar restaurante</a>
       <a href="https://painel.rangopass.com/">Área do restaurante</a>
     </nav>
     <div class="copy">© 2026 RangoPass · São José do Rio Preto, SP · Contato: WhatsApp +55 17 99791-0171</div>
@@ -609,6 +735,18 @@ footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:2
         '<path d="M96 164 V178 Q104 186 112 178 V164" fill="none" ' + st(4) + '/>' +
         '<path d="M196 164 Q186 180 196 192 V214" fill="none" ' + st() + '/>' +
         sparks([[48, 80, 12], [252, 70, 10], [256, 214, 9]]);
+    },
+    "rff-place": function () {
+      return blob +
+        '<ellipse cx="150" cy="252" rx="64" ry="11" fill="' + INK + '" opacity=".18"/>' +
+        '<path d="M150 248 C150 248 78 172 78 124 A72 72 0 0 1 222 124 C222 172 150 248 150 248 Z" fill="' + C.coral + '" ' + st() + '/>' +
+        '<circle cx="150" cy="124" r="36" fill="#fff" ' + st() + '/>' +
+        '<line x1="138" y1="112" x2="138" y2="142" ' + st(4) + '/>' +
+        '<path d="M132 106 V116 Q138 122 144 116 V106" fill="none" ' + st(3.5) + '/>' +
+        '<path d="M164 106 Q156 118 164 128 V142" fill="none" ' + st(4) + '/>' +
+        '<circle cx="56" cy="210" r="18" fill="' + C.yellow + '" ' + st(4) + '/>' +
+        '<circle cx="244" cy="210" r="18" fill="' + C.blue + '" ' + st(4) + '/>' +
+        sparks([[50, 70, 11], [252, 66, 11]]);
     },
     "rff-chat": function () {
       return blob +
@@ -793,6 +931,113 @@ footer .copy{width:100%;border-top:1px solid rgba(253,241,232,.18);padding-top:2
     render(shuffle(dishes).slice(0, 28), restaurants);
   }).catch(function () {
     render(FALLBACK, []);
+  });
+
+  /* ---------- Menu do celular ---------- */
+  var menuBtn = document.getElementById("menuBtn");
+  var mmenu = document.getElementById("mmenu");
+  var setMenu = function (open) {
+    mmenu.hidden = !open;
+    menuBtn.setAttribute("aria-expanded", String(open));
+    menuBtn.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+  };
+  menuBtn.addEventListener("click", function () { setMenu(mmenu.hidden); });
+  mmenu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+  window.addEventListener("resize", function () { if (window.innerWidth > 1100) setMenu(false); });
+
+  /* ---------- Formulários: Sou restaurante / Indicar restaurante ---------- */
+  var DIALOGS = { restaurante: document.getElementById("dlg-restaurante"), indicacao: document.getElementById("dlg-indicacao") };
+  var HASH = { "#sou-restaurante": "restaurante", "#indicar": "indicacao" };
+  var openForm = function (kind) {
+    var dlg = DIALOGS[kind];
+    if (!dlg || dlg.open) return;
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+    var first = dlg.querySelector("input:not(.hp)");
+    if (first && window.matchMedia("(pointer: fine)").matches) setTimeout(function () { first.focus(); }, 60);
+  };
+  var resetForm = function (form) {
+    form.reset();
+    form.querySelector(".form-body").hidden = false;
+    form.querySelector(".form-done").hidden = true;
+    var err = form.querySelector(".err"); err.hidden = true; err.textContent = "";
+  };
+  document.addEventListener("click", function (e) {
+    var trigger = e.target.closest("[data-open]");
+    if (trigger) { e.preventDefault(); openForm(trigger.getAttribute("data-open")); }
+  });
+  Object.keys(DIALOGS).forEach(function (kind) {
+    var dlg = DIALOGS[kind];
+    dlg.addEventListener("click", function (e) {
+      // Fecha no X, no botão "Fechar" ou tocando fora da janela.
+      if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
+    });
+    dlg.addEventListener("close", function () {
+      resetForm(dlg.querySelector("form"));
+      if (HASH[location.hash]) history.replaceState(null, "", location.pathname + location.search);
+    });
+  });
+  // Link direto (rangopass.com/#sou-restaurante ou /#indicar) já abre o formulário.
+  if (HASH[location.hash]) openForm(HASH[location.hash]);
+  window.addEventListener("hashchange", function () { if (HASH[location.hash]) openForm(HASH[location.hash]); });
+
+  // Telefone: (17) 99999-9999 enquanto digita.
+  document.querySelectorAll('.lead-form input[name="phone"]').forEach(function (inp) {
+    inp.addEventListener("input", function () {
+      var d = inp.value.replace(/\D/g, "").slice(0, 11);
+      inp.value = d.length > 10 ? "(" + d.slice(0, 2) + ") " + d.slice(2, 7) + "-" + d.slice(7)
+        : d.length > 6 ? "(" + d.slice(0, 2) + ") " + d.slice(2, 6) + "-" + d.slice(6)
+        : d.length > 2 ? "(" + d.slice(0, 2) + ") " + d.slice(2)
+        : d;
+    });
+  });
+
+  document.querySelectorAll(".lead-form").forEach(function (form) {
+    var kind = form.getAttribute("data-kind");
+    var err = form.querySelector(".err");
+    var btn = form.querySelector(".submit");
+    var label = btn.textContent;
+    var showErr = function (msg) { err.textContent = msg; err.hidden = false; };
+    var done = function () {
+      form.querySelector(".form-body").hidden = true;
+      form.querySelector(".form-done").hidden = false;
+    };
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      err.hidden = true;
+      var v = function (name) { var el = form.elements[name]; return el ? String(el.value).trim() : ""; };
+      var phone = v("phone").replace(/\D/g, "");
+      var msg =
+        v("restaurant_name").length < 2 ? "Informe o nome do restaurante." :
+        kind === "restaurante" && !v("category") ? "Escolha a categoria." :
+        v("contact_name").length < 2 ? (kind === "restaurante" ? "Informe o nome do responsável." : "Informe o seu nome.") :
+        kind === "restaurante" && !phone ? "Informe o telefone com DDD." :
+        phone && (phone.length < 10 || phone.length > 11) ? "Telefone inválido. Use DDD + número." : "";
+      if (msg) { showErr(msg); return; }
+      if (v("website")) { done(); return; } // campo escondido preenchido = robô
+      btn.disabled = true;
+      btn.textContent = "Enviando…";
+      fetch(SB + "rpc/submit_site_lead", {
+        method: "POST",
+        headers: { apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          p_kind: kind,
+          p_restaurant_name: v("restaurant_name"),
+          p_phone: phone,
+          p_category: v("category"),
+          p_contact_name: v("contact_name")
+        })
+      }).then(function (r) {
+        if (r.ok) { done(); return; }
+        return r.json().catch(function () { return {}; }).then(function (j) {
+          showErr(j && j.message ? j.message : "Não deu pra enviar agora. Tente de novo.");
+        });
+      }).catch(function () {
+        showErr("Sem conexão. Confira a internet e tente de novo.");
+      }).then(function () {
+        btn.disabled = false;
+        btn.textContent = label;
+      });
+    });
   });
 })();
 </script>
